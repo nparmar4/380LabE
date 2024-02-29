@@ -3,21 +3,23 @@ package edu.ucalgary.oop;
 import java.util.Objects;
 
 public class Task {
-
-    private int id;
+    private String id;
     private String title;
     private boolean isCompleted;
 
-    public Task(int id, String title, boolean isCompleted) {
+    // Constructor
+    public Task(String id, String title) {
         this.id = id;
         this.title = title;
-        this.isCompleted = isCompleted;
-    } 
-    public int getId() {
+        this.isCompleted = false; // Initialize as not completed
+    }
+
+    // Getter methods for id, title, and isCompleted
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -30,17 +32,16 @@ public class Task {
     }
 
     public boolean isCompleted() {
-        return isCompleted;
+        return this.isCompleted;
     }
 
-    public void setCompleted(boolean completed) {
-        isCompleted = completed;
+    public void setCompleted(boolean setValue) {
+        this.isCompleted = setValue;
     }
-    
-    public Task(Task copy) {
-        this.id = copy.id;
-        this.title = copy.title;
-        this.isCompleted = copy.isCompleted;
+
+    // Implementing the copy method for deep copying task objects
+    public Task copy() {
+        return new Task(this.id, this.title);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class Task {
         Task task = (Task) obj;
         return Objects.equals(id, task.id) &&
                Objects.equals(title, task.title) &&
-               isCompleted == task.isCompleted; 
+               isCompleted == task.isCompleted;
     }
 
     @Override

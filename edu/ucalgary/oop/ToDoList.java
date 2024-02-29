@@ -1,75 +1,70 @@
 package edu.ucalgary.oop;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+public class ToDoList implements IToDoList {
+    private List<Task> tasks;
+    private Stack<List<Task>> history;
 
-class ToDoList implements IToDoList{
+    // Constructor
+    public ToDoList() {
+        this.tasks = new ArrayList<>();
+        this.history = new Stack<>();
+    }
 
-   private List<Task> tasks;
-   private Stack<List<Task>> history;
-
-   public ToDoList() {
-       this.tasks = new ArrayList<>();
-       this.history = new Stack<>();
-   }
-
+    // Implementing IToDoList interface methods
     @Override
     public void addTask(Task task) {
+        // Before making a change, push the current state onto the stack
+        history.push(new ArrayList<>(tasks));
+
         tasks.add(task);
-        history.push(new TaskOperation(OperationType.ADD, task));
     }
 
     @Override
-    public void completeTask(Task task) {
-        task.setCompleted(true);
-        history.push(new TaskOperation(OperationType.COMPLETE, task));
-    }
+    public void completeTask(String taskId) {
+        history.push(new ArrayList<>(tasks));
 
-    @Override
-    public void deleteTask(Task task) {
-        tasks.remove(task);
-        history.push(new TaskOperation(OperationType.DELETE, task));
-    }
-
-    @Override
-        public void editTask(Task task, String newDescription) {
-            Task originalTask = tasks.get(tasks.indexOf(task));
-            originalTask.setDescription(newDescription);
-            history.push(new TaskOperation(OperationType.EDIT, originalTask));
-        }
-
-        @Override
-        public void undo() {
-            if (!history.isEmpty()) {
-                TaskOperation lastOperation = history.pop();
-                switch (lastOperation.getOperationType()) {
-                    case ADD:
-                        tasks.remove(lastOperation.getTask());
-                        break;
-                    case COMPLETE:
-                        lastOperation.getTask().setCompleted(false);
-                        break;
-                    case DELETE:
-                        tasks.add(lastOperation.getTask());
-                        break;
-                    case EDIT:
-                        Task editedTask = lastOperation.getTask();
-                        Task originalTask = tasks.get(tasks.indexOf(editedTask));
-                        originalTask.setDescription(editedTask.getDescription());
-                        break;
-                    default:
-                        break;
-                }
+        for (Task task : tasks) {
+            if (task.getId().equals(taskId)) {
+                task.setCompleted(true);
+                task.isCompleted();
+                return;
             }
         }
+    }
 
-        @Override
-        public List<String> listTasks() {
-            List<String> taskDescriptions = new ArrayList<>();
-            for (Task task : tasks) {
-                taskDescriptions.add(task.getDescription());
+    @Override
+    public void deleteTask(String taskId) {
+        history.push(new ArrayList<>(tasks));
+
+        tasks.removeIf(task -> task.getId().equals(taskId));
+    }
+
+    @Override
+    public void editTask(String taskId, String newTitle, boolean markAsCompleted) {
+        history.push(new ArrayList<>(tasks));
+
+        for (Task task : tasks) {
+            if (task.getId().equals(taskId)) {
+                task.setTitle(newTitle);
+                task.setCompleted(markAsCompleted);
+                return;
             }
-            return taskDescriptions;
         }
     }
+
+    @Override
+    public void undo() {
+        if (!history.isEmpty()) {
+            tasks = history.pop();
+        }
+    }
+
+    @Override
+    public List<Task> listTasks() {
+        return tasks;
+    }
+}
