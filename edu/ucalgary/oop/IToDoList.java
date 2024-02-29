@@ -19,15 +19,13 @@ interface IToDoList {
     public void deleteTask(Task task) {
     }
 
-    public void editTask() {
-        
+    public void editTask(Task task, String newDescription) {
     }
 
     public void undo() {
-
+  
     }
-
-    public void listTasks() {
-        
+    
+    public List<String> listTasks() {
     }
 }
