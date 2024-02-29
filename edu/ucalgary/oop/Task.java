@@ -4,6 +4,10 @@ import java.util.Objects;
 
 public class Task {
 
+    private int id;
+    private String title;
+    private boolean isCompleted;
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
