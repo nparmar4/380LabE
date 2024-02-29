@@ -1,8 +1,10 @@
 package edu.ucalgary.oop;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
-import java.util.Objects;
 
-interface ToDoList implements IToDoList{
+class ToDoList implements IToDoList{
 
    private List<Task> tasks;
    private Stack<List<Task>> history;
