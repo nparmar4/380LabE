@@ -36,8 +36,13 @@ public class Task {
     public void setCompleted(boolean completed) {
         isCompleted = completed;
     }
-
     
+    public Task(Task copy) {
+        this.id = copy.id;
+        this.title = copy.title;
+        this.isCompleted = copy.isCompleted;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
