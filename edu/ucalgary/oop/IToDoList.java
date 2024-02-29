@@ -1,31 +1,18 @@
 package edu.ucalgary.oop;
 
-import java.util.Objects;
+import java.util.List;
 
 interface IToDoList {
 
-    private List<Task> tasks;
-    private Stack<TaskOperation> history;
+    void addTask(Task task);
 
-    public IToDoList() {
-    }
+    void completeTask(Task task);
 
-    public void addTask(Task task) {
-    }
+    void deleteTask(Task task);
 
-    public void completeTask(Task task) {
-    }
+    void editTask(Task task, String newDescription);
 
-    public void deleteTask(Task task) {
-    }
+    void undo();
 
-    public void editTask(Task task, String newDescription) {
-    }
-
-    public void undo() {
-  
-    }
-    
-    public List<String> listTasks() {
-    }
+    List<String> listTasks();
 }
