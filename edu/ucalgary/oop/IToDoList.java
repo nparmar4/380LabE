@@ -3,17 +3,31 @@ package edu.ucalgary.oop;
 import java.util.Objects;
 
 public class IToDoList {
-// Define an interface with methods for adding, completing, deleting, editing, undoing, and listing tasks
-    public void adding() {
-        
+
+    private List<Task> tasks;
+    private Stack<TaskOperation> history;
+
+    public IToDoList() {
+        this.tasks = new ArrayList<>();
+        this.history = new Stack<>();
     }
 
-    public void completing() {
-        
+    @Override
+    public void addTask(Task task) {
+        tasks.add(task);
+        history.push(new TaskOperation(OperationType.ADD, task));
     }
-    
-    public void deleting() {
 
+    @Override
+    public void completeTask(Task task) {
+        task.setCompleted(true);
+        history.push(new TaskOperation(OperationType.COMPLETE, task));
+    }
+
+    @Override
+    public void deleteTask(Task task) {
+        tasks.remove(task);
+        history.push(new TaskOperation(OperationType.DELETE, task));
     }
 
     public void editing() {
