@@ -7,14 +7,12 @@ public class Task {
     private String title;
     private boolean isCompleted;
 
-    // Constructor
     public Task(String id, String title) {
         this.id = id;
         this.title = title;
-        this.isCompleted = false; // Initialize as not completed
+        this.isCompleted = false;
     }
 
-    // Getter methods for id, title, and isCompleted
     public String getId() {
         return id;
     }
@@ -39,7 +37,6 @@ public class Task {
         this.isCompleted = setValue;
     }
 
-    // Implementing the copy method for deep copying task objects
     public Task copy() {
         return new Task(this.id, this.title);
     }

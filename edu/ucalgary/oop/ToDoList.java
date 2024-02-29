@@ -8,16 +8,13 @@ public class ToDoList implements IToDoList {
     private List<Task> tasks;
     private Stack<List<Task>> history;
 
-    // Constructor
     public ToDoList() {
         this.tasks = new ArrayList<>();
         this.history = new Stack<>();
     }
 
-    // Implementing IToDoList interface methods
     @Override
     public void addTask(Task task) {
-        // Before making a change, push the current state onto the stack
         history.push(new ArrayList<>(tasks));
 
         tasks.add(task);
