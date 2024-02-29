@@ -30,15 +30,44 @@ interface ToDoList {
        history.push(new TaskOperation(OperationType.DELETE, task));
    }
 
-   public void editing() {
-       
-   }
+   @Override
+    public void editTask(Task task, String newDescription) {
+        Task originalTask = tasks.get(tasks.indexOf(task));
+        originalTask.setDescription(newDescription);
+        history.push(new TaskOperation(OperationType.EDIT, originalTask));
+    }
 
-   public void undoing() {
+    @Override
+    public void undo() {
+        if (!history.isEmpty()) {
+            TaskOperation lastOperation = history.pop();
+            switch (lastOperation.getOperationType()) {
+                case ADD:
+                    tasks.remove(lastOperation.getTask());
+                    break;
+                case COMPLETE:
+                    lastOperation.getTask().setCompleted(false);
+                    break;
+                case DELETE:
+                    tasks.add(lastOperation.getTask());
+                    break;
+                case EDIT:
+                    Task editedTask = lastOperation.getTask();
+                    Task originalTask = tasks.get(tasks.indexOf(editedTask));
+                    originalTask.setDescription(editedTask.getDescription());
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
-   }
-
-   public void listing_tasks() {
-       
-   }
+    @Override
+    public List<String> listTasks() {
+        List<String> taskDescriptions = new ArrayList<>();
+        for (Task task : tasks) {
+            taskDescriptions.add(task.getDescription());
+        }
+        return taskDescriptions;
+    }
 }
