@@ -8,7 +8,11 @@ public class Task {
     private String title;
     private boolean isCompleted;
 
-    public 
+    public Task(int id, String title, boolean isCompleted) {
+        this.id = id;
+        this.title = title;
+        this.isCompleted = isCompleted;
+    } 
 
     @Override
     public boolean equals(Object obj) {
