@@ -2,10 +2,10 @@ package edu.ucalgary.oop;
 
 import java.util.Objects;
 
-interface ToDoList {
+interface ToDoList implements IToDoList{
 
    private List<Task> tasks;
-   private Stack<TaskOperation> history;
+   private Stack<List<Task>> history;
 
    public ToDoList() {
        this.tasks = new ArrayList<>();
