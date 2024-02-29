@@ -3,7 +3,7 @@ package edu.ucalgary.oop;
 import java.util.Objects;
 
 public class Task {
-  
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
